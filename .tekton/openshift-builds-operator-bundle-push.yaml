@@ -2,13 +2,13 @@ apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
   annotations:
-    build.appstudio.openshift.io/repo: https://github.com/redhat-openshift-builds/operator?rev={{revision}}
+    build.appstudio.openshift.io/repo: https://github.com/psrvere/redhat-openshift-builds-operator?rev={{revision}}
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: |
       event == "push" &&
-      target_branch == "builds-1.4" &&
+      target_branch == "builds-1.4-test" &&
       (
         files.all.exists(x, x.matches('bundle/')) ||
         files.all.exists(x, x.matches('bundle.Dockerfile')) ||
@@ -28,7 +28,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/rh-openshift-builds-tenant/openshift-builds-operator-bundle-1-4:{{revision}}
+    value: quay.io/repository/prathore/openshift-builds-bundle-test:{{revision}}
   - name: dockerfile
     value: bundle.Dockerfile
   - name: build-source-image
