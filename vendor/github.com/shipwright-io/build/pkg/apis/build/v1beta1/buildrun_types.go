@@ -59,8 +59,9 @@ type BuildRunSpec struct {
 	//
 	Build ReferencedBuild `json:"build"`
 
-	// Source refers to the location where the source code is,
-	// this could only be a local source
+	// Source overrides where the source code is obtained for the BuildRun. This can only be used
+	// to obtain source code from a remote machine's local directory, instead of the value defined
+	// in the build.
 	//
 	// +optional
 	Source *BuildRunSource `json:"source,omitempty"`
@@ -237,8 +238,14 @@ type BuildRunStatus struct {
 
 	// TaskRunName is the name of the TaskRun responsible for executing this BuildRun.
 	//
+	// Deprecated: Use Executor instead to describe the taskrun.
 	// +optional
 	TaskRunName *string `json:"taskRunName,omitempty"`
+
+	// Executor is the name and kind of the resource responsible for executing this BuildRun.
+	//
+	// +optional
+	Executor *BuildExecutor `json:"executor,omitempty"`
 
 	// StartTime is the time the build is actually started.
 	// +optional
@@ -447,4 +454,12 @@ func (buildrunSpec *BuildRunSpec) BuildName() string {
 
 	// Only BuildRuns with a ReferencedBuild can actually return a proper Build name
 	return ""
+}
+
+// BuildExecutor defines the name and kind of the build runner.
+type BuildExecutor struct {
+	// Name is the name of the TaskRun or PipelineRun that was created to execute this BuildRun
+	Name string `json:"name"`
+	// Kind is the kind of the object that was created to execute the BuildRun (e.g., "TaskRun", "PipelineRun")
+	Kind string `json:"kind"`
 }
