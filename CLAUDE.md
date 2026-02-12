@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This operator deploys and manages **Shipwright Build** components and the **Shared Resource CSI Driver** on OpenShift clusters. It is built with Go 1.24, controller-runtime v0.21, and uses manifestival for declarative resource management.
+This operator deploys and manages **Shipwright Build** components and the **Shared Resource CSI Driver** on OpenShift clusters. It is built with Go 1.24, controller-runtime v0.21, and uses manifestival for declarative resource management. The operator is part of the OpenShift Builds product.
 
 Key controllers:
 - `OpenShiftBuildReconciler` -- reconciles the cluster-scoped `OpenShiftBuild` CR.
